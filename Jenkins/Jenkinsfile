@@ -24,9 +24,9 @@ pipeline {
 //
     stages {
         stage ('Checkout from GIT') {
-//            steps {
-//                checkout conLogin
-//            }
+            steps {
+                echo " aqui hago el checkout para ubicarme en la branch conLogin"
+            }
 		}
 //
 //        stage ('Setup CI/CD Environment') {
