@@ -1,13 +1,7 @@
 #!groovy
-//@Library(["pipelineuk@3.2.0", "hyperloop-sec"]) _
-//
-////
-//// Nginx Project with static content
 ////
 pipeline {
-    agent {
-        label 'nodejs6'
-    }
+    agent {  any  }
     stages {
         stage ('Checkout from GIT') {
             steps {
@@ -19,24 +13,22 @@ pipeline {
     post {
         always {
             cleanWs()
-
-            sh 'echo "Todos los stages terminaron de ejecutarse. Barbaro!"'
+            sh ('echo "Todos los stages terminaron de ejecutarse. Barbaro!"')
         }
-
         success {
             sh ("echo 'El Job termino de forma macheterica'")
         }
-
         failure {
-            emailext(
-                    to: 'joseluis.gonzalez@santander.co.uk',
-                    subject: "Jenkins File Fallo que Vaina: Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]'",
-                    body: "<a href='${env.BUILD_URL}'>Arreglame Mijitoco!</a>",
-                    recipientProviders: [[$class: 'DevelopersRecipientProvider'],
-                                         [$class: 'CulpritsRecipientProvider'],
-                                         [$class: 'RequesterRecipientProvider'],
-                                         [$class: 'FirstFailingBuildSuspectsRecipientProvider']]
-            )
+			sh ("echo 'Mando el email con el error'")
+//           emailext(
+//                   to: 'joseluis.gonzalez@santander.co.uk',
+//                   subject: "Jenkins File Fallo que Vaina: Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]'",
+//                   body: "<a href='${env.BUILD_URL}'>Arreglame Mijitoco!</a>",
+//                   recipientProviders: [[$class: 'DevelopersRecipientProvider'],
+//                                        [$class: 'CulpritsRecipientProvider'],
+//                                        [$class: 'RequesterRecipientProvider'],
+//                                        [$class: 'FirstFailingBuildSuspectsRecipientProvider']]
+//            )
         }
     }
 }
