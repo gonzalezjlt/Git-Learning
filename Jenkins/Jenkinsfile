@@ -5,9 +5,9 @@
 //// Nginx Project with static content
 ////
 pipeline {
-//    agent {
-//        label 'nodejs6'
-//    }
+    agent {
+        label 'nodejs6'
+    }
 //
 //    environment {
 //        APP_NAME="inter-tung-faq"
