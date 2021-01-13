@@ -5,163 +5,38 @@
 //// Nginx Project with static content
 ////
 pipeline {
-//    agent {
-//        label 'nodejs6'
-//    }
-//
-//    environment {
-//        APP_NAME="inter-tung-faq"
-//        PROJECT="tungsten-internet"
-//        RELEASE_APP_NAME="inter-tung-faq-rel"
-//    }
-//
-//    options {
-//        skipDefaultCheckout() // Needed to avoid Git checkout for Docker slave
-//        disableConcurrentBuilds()
-//        timeout(time: 1, unit: 'HOURS')
-//        buildDiscarder(logRotator(daysToKeepStr: '2'))
-//    }
-//
+    agent {
+        label 'nodejs6'
+    }
     stages {
         stage ('Checkout from GIT') {
-//            steps {
-//                checkout conLogin
-//            }
+            steps {
+                echo " aqui hago el checkout para ubicarme en la branch conLogin"
+            }
 		}
-//
-//        stage ('Setup CI/CD Environment') {
-//            steps {
-//                echo "branch name is ${env.BRANCH_NAME}"
-//                script {
-//                     if (env.BRANCH_NAME != "develop") {    //use this condition for Jenkins Version 2.107+
-//                        hlSetEnv('IMAGE_TAG', hlCreateTagName('pkg:version'))
-//                        hlSetEnv('APP_NAME', RELEASE_APP_NAME)
-//                        hlSetEnv('SPRING_CONFIG_LABEL', 'master')
-//                        echo "Image Tag is ${IMAGE_TAG}"
-//                    } else {
-//                        hlSetEnv('IMAGE_TAG', 'latest')
-//                        hlSetEnv('APP_NAME', APP_NAME)
-//                        hlSetEnv('SPRING_CONFIG_LABEL', 'develop')
-//                        echo "Image Tag is ${IMAGE_TAG}"
-//                    }
-//                }
-//
-//            }
-//        }
-//
-//        stage ('Build source') {
-//            steps {
-//                stash name: 'app'
-//            }
-//        }
-//
-//        stage ('Docker Build') {
-//            agent {
-//                label 'docker'
-//            }
-//
-//            steps {
-//                unstash 'app'
-//
-//                hlBuildImage('NginxCorporateImage',[
-//                        registry: 'registry.cap1.paas.gsnetcloud.corp',
-//                        project: PROJECT,
-//                        appName: APP_NAME,
-//                        imageName: APP_NAME,
-//                        version: IMAGE_TAG,
-//                        dockerCredentialId: "gitlab-credentials"
-//                ])
-//            }
-//        }
-//
-//        stage ('Kraken Test') {
-//            agent {
-//                label 'docker'
-//            }
-//
-//            steps {
-//                hlKrakenScan([
-//                        registry: 'registry.cap1.paas.gsnetcloud.corp',
-//                        project: 'tungsten-internet',
-//                        imageName: APP_NAME,
-//                        tag: IMAGE_TAG,
-//                        serviceAccount: 'gitlab-credentials'
-//                ])
-//            }
-//        }
-//
-//        /*stage ('Check Quota') {
-//
-//            steps {
-//                hlCheckQuota([
-//                        TokenID: "cap1-dev-token", // this is the PaaS Service-Account (NOT LDAP Service Account) token ID from Jenkins Credential List
-//                        projectName: "tungsten-internet-dev",
-//                        region: "CAP1",
-//                        memoryAlert: 4,  // GB
-//                        logLevel: "WARNING"
-//                ])
-//            }
-//        }*/
-//
-//
-//
-//        stage ('Deploy Image to CAP') {
-//            steps {
-//                hlDeployImage('NginxCorporateImage',[
-//                        registry: 'registry.cap1.paas.gsnetcloud.corp',
-//                        project: 'tungsten-internet',
-//                        appName: APP_NAME,
-//                        routeName: APP_NAME,
-//                        routePath: APP_NAME,
-//                        routeHost: "tungsten-internet-dev.santanderuk.pre.corp",
-//                        imageName: APP_NAME,
-//                        version: IMAGE_TAG,
-//                        imagePullPolicy: "Always",
-//                        resources: [limits: [cpu: "900m", memory: "2G"], requests: [cpu: "50m", memory: "1G"]],
-//                        livenessProbe : [tcpSocket: [port:8080],initialDelaySeconds:30,timeoutSeconds:2,periodSeconds:30,successThreshold:1,failureThreshold:3],
-//                        readinessProbe : [httpGet: [path:'/favicon.ico',port:8080,scheme:'HTTP'],initialDelaySeconds:30,timeoutSeconds:2,periodSeconds:30,successThreshold:1,failureThreshold:3]
-//                ])
-//            }
-//        }
-//
-//        stage ('Verify Service') {
-//            steps {
-//                openshiftVerifyService(svcName: APP_NAME, verbose: 'false')
-//            }
-//        }
-//
-//        stage('Trigger Pre Release'){
-//            when {
-//                branch '*.*.*'
-//            }
-//
-//            steps {
-//                httpRequest authentication: 'gitlab-credentials', httpMode: 'POST', ignoreSslErrors: true, responseHandle: 'NONE', url: "https://alm-jenkins.almuk.santanderuk.corp/job/tungsten-internet/job/tungsten-internet-pre/job/inter-tung-faq/job/inter-tung-faq-release/buildWithParameters?token=inter-tung-faq-release&VERSION=${env.IMAGE_TAG}"
-//            }
-//        }
     }
 //
-//    post {
-//        always {
-//            cleanWs()
-//
-//            sh 'echo "All stages finished running"'
-//        }
-//
-//        success {
-//            sh ("echo 'Job finished successfully'")
-//        }
-//
-//        failure {
-//            emailext(
-//                    to: '$DEFAULT_RECIPIENTS',
-//                    subject: "Jenkins FAILED: Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]'",
-//                    body: "<a href='${env.BUILD_URL}'>Fix me!</a>",
-//                    recipientProviders: [[$class: 'DevelopersRecipientProvider'],
-//                                         [$class: 'CulpritsRecipientProvider'],
-//                                         [$class: 'RequesterRecipientProvider'],
-//                                         [$class: 'FirstFailingBuildSuspectsRecipientProvider']]
-//            )
-//        }
-//    }
+    post {
+        always {
+            cleanWs()
+
+            sh 'echo "Todos los stages terminaron de ejecutarse. Barbaro!"'
+        }
+
+        success {
+            sh ("echo 'El Job termino de forma macheterica'")
+        }
+
+        failure {
+            emailext(
+                    to: 'joseluis.gonzalez@santander.co.uk',
+                    subject: "Jenkins File Fallo que Vaina: Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]'",
+                    body: "<a href='${env.BUILD_URL}'>Arreglame Mijitoco!</a>",
+                    recipientProviders: [[$class: 'DevelopersRecipientProvider'],
+                                         [$class: 'CulpritsRecipientProvider'],
+                                         [$class: 'RequesterRecipientProvider'],
+                                         [$class: 'FirstFailingBuildSuspectsRecipientProvider']]
+            )
+        }
+    }
 }
