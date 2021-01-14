@@ -8,7 +8,7 @@ pipeline {
         RELEASE_APP_NAME="HolaGordis-faq-release"
     }
     stages {
-        stage ('Checkout from GIT') {
+        stage ('Hace Checkout from GIT a SCM') {
             steps {
                 checkout scm  //echo " aqui hago el checkout para ubicarme en la branch conLogin"
             }
@@ -36,13 +36,13 @@ pipeline {
     post {
         always {
             cleanWs()
-            sh ('echo "Todos los stages terminaron de ejecutarse. Barbaro!"')
+            echo ('echo "Todos los stages terminaron de ejecutarse. Barbaro!"')
         }
         success {
-            sh ("echo 'El Job termino de forma macheterica'")
+            echo("echo 'El Job termino de forma macheterica'")
         }
 //        failure {
-//			sh ("echo 'Mando el email con el error'")
+//			echo ("echo 'Mando el email con el error'")
 //           emailext(
 //                   to: 'joseluis.gonzalez@santander.co.uk',
 //                   subject: "Jenkins File Fallo que Vaina: Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]'",
