@@ -3,7 +3,7 @@
 pipeline {
     agent any
     stages {
-        stage ('Checkout from GIT') {
+        stage ('Checkout from Gochilandia IT') {
             steps {
                 echo " aqui hago el checkout para ubicarme en la branch conLogin"
             }
