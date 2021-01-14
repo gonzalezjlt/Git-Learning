@@ -1,25 +1,25 @@
-#!groovy
+//#!groovy
 ////
-pipeline {
-    agent {  label 'any'  }
-    stages {
-        stage ('Checkout from GIT') {
-            steps {
-                echo " aqui hago el checkout para ubicarme en la branch conLogin"
-            }
-		}
-    }
+//pipeline {
+//    agent {  label 'any'  }
+//    stages {
+//        stage ('Checkout from GIT') {
+//            steps {
+//                echo " aqui hago el checkout para ubicarme en la branch conLogin"
+//            }
+//		}
+//    }
 //
-    post {
-        always {
-            cleanWs()
-            sh ('echo "Todos los stages terminaron de ejecutarse. Barbaro!"')
-        }
-        success {
-            sh ("echo 'El Job termino de forma macheterica'")
-        }
-        failure {
-			sh ("echo 'Mando el email con el error'")
+//    post {
+//        always {
+//            cleanWs()
+//            sh ('echo "Todos los stages terminaron de ejecutarse. Barbaro!"')
+//        }
+//        success {
+//            sh ("echo 'El Job termino de forma macheterica'")
+//        }
+//        failure {
+//			sh ("echo 'Mando el email con el error'")
 //           emailext(
 //                   to: 'joseluis.gonzalez@santander.co.uk',
 //                   subject: "Jenkins File Fallo que Vaina: Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]'",
@@ -29,6 +29,6 @@ pipeline {
 //                                        [$class: 'RequesterRecipientProvider'],
 //                                        [$class: 'FirstFailingBuildSuspectsRecipientProvider']]
 //            )
-        }
-    }
-}
+//        }
+//    }
+//}
