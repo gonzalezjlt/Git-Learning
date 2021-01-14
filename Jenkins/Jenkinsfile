@@ -8,9 +8,10 @@ pipeline {
         RELEASE_APP_NAME="HolaGordis-faq-release"
     }
     stages {
-        stage ('Hace Checkout from GIT a SCM') {
+        stage ('Hace Checkout from GIT a conLogin') {
             steps {
-                checkout scm  //echo " aqui hago el checkout para ubicarme en la branch conLogin"
+                checkout conLogin  
+				echo " aqui hago el checkout para ubicarme en la branch conLogin"
             }
 		}
     }
