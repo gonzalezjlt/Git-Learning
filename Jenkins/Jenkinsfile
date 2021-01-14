@@ -2,22 +2,45 @@
 ////
 pipeline {
     agent any
+    environment {
+        APP_NAME="HolaGordis-FAQ"
+        PROJECT="Gordis-Jenkins-Yankees-intramundo"
+        RELEASE_APP_NAME="HolaGordis-faq-release"
+    }
     stages {
-        stage ('Checkout from Gochilandia IT') {
+        stage ('Checkout from GIT') {
             steps {
-                echo " aqui hago el checkout para ubicarme en la branch conLogin"
+                checkout scm  //echo " aqui hago el checkout para ubicarme en la branch conLogin"
             }
 		}
     }
+    stage ('Setup CI/CD Environment') {
+        steps {
+            echo "branch name is ${env.BRANCH_NAME}"
+            script {
+                 if (env.BRANCH_NAME != "develop") {    //use this condition for Jenkins Version 2.107+
+                    hlSetEnv('IMAGE_TAG', hlCreateTagName('pkg:version'))
+                    hlSetEnv('APP_NAME', RELEASE_APP_NAME)
+                    hlSetEnv('SPRING_CONFIG_LABEL', 'master')
+                    echo "Perico Image Tag is ${IMAGE_TAG}"
+                } else {
+                    hlSetEnv('IMAGE_TAG', 'latest')
+                    hlSetEnv('APP_NAME', APP_NAME)
+                    hlSetEnv('SPRING_CONFIG_LABEL', 'master')
+                    echo "Otro perico Image Tag is ${IMAGE_TAG}"
+                }
+            }
+         }
+    }
 //
-//    post {
-//        always {
-//            cleanWs()
-//            sh ('echo "Todos los stages terminaron de ejecutarse. Barbaro!"')
-//        }
-//        success {
-//            sh ("echo 'El Job termino de forma macheterica'")
-//        }
+    post {
+        always {
+            cleanWs()
+            sh ('echo "Todos los stages terminaron de ejecutarse. Barbaro!"')
+        }
+        success {
+            sh ("echo 'El Job termino de forma macheterica'")
+        }
 //        failure {
 //			sh ("echo 'Mando el email con el error'")
 //           emailext(
@@ -30,5 +53,5 @@ pipeline {
 //                                        [$class: 'FirstFailingBuildSuspectsRecipientProvider']]
 //            )
 //        }
-//    }
+    }
 }
