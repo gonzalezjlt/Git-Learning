@@ -10,7 +10,7 @@ pipeline {
     stages {
         stage ('Hace Checkout from GIT a conLogin') {
             steps {
-                checkout conLogin  
+                checkout scm  
 				echo " aqui hago el checkout para ubicarme en la branch conLogin"
             }
 		}
