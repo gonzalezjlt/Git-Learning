@@ -8,16 +8,16 @@ pipeline {
         RELEASE_APP_NAME="HolaGordis-faq-release"
     }
     stages {
-        stage ('Hace Checkout from GIT a conLogin') {
+        stage ('Hace Checkout from GIT a SCM') {
             steps {
                 checkout scm  
 				echo " aqui hago el checkout para ubicarme en la branch conLogin"
             }
 		}
     }
-//    stage ('Setup CI/CD Environment') {
-//        steps {
-//            echo "branch name is ${env.BRANCH_NAME}"
+    stage ('Setup CorteIngles/CentroDepot Environment') {
+        steps {
+            echo "branch name is ${env.BRANCH_NAME}"
 //            script {
 //                 if (env.BRANCH_NAME != "develop") {    //use this condition for Jenkins Version 2.107+
 //                    hlSetEnv('IMAGE_TAG', hlCreateTagName('pkg:version'))
@@ -31,8 +31,8 @@ pipeline {
 //                    echo "Otro perico Image Tag is ${IMAGE_TAG}"
 //                }
 //            }
-//         }
-//    }
+         }
+    }
 //
     post {
         always {
