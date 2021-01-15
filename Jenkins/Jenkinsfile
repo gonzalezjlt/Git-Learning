@@ -16,8 +16,8 @@ pipeline {
 		}
         stage ('Setup CorteIngles/CentroDepot Environment') {
             steps {
-                echo "branch name is" ${env.JENKINS_HOME}"
-                echo "branch name is" ${env.BUILD_TAG}"
+                echo "branch name is ${env.JENKINS_HOME}"
+                echo "branch name is ${env.BUILD_TAG}"
 //                echo "branch name is" // ${env.BRANCH_NAME}"
 //              script {
 //                   if (env.BRANCH_NAME != "develop") {    //use this condition for Jenkins Version 2.107+
