@@ -16,7 +16,8 @@ pipeline {
 		}
         stage ('Setup CorteIngles/CentroDepot Environment') {
             steps {
-                echo "branch name is" // ${env.BRANCH_NAME}"
+                echo "branch name is" // ${env.APP_NAME}"
+//                echo "branch name is" // ${env.BRANCH_NAME}"
 //              script {
 //                   if (env.BRANCH_NAME != "develop") {    //use this condition for Jenkins Version 2.107+
 //                      hlSetEnv('IMAGE_TAG', hlCreateTagName('pkg:version'))
