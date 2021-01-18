@@ -20,6 +20,7 @@ pipeline {
                 echo "BUILD TAG name is ${env.BUILD_TAG}"
                 echo "BRANCH name is ${env.BRANCH_NAME}"
                 echo "GIT BRANCH name is ${env.GIT_BRANCH}"
+                echo "QUE PASA is ${env.QUE_PASA}"
 //              script {
 //                   if (env.BRANCH_NAME != "develop") {    //use this condition for Jenkins Version 2.107+
 //                      hlSetEnv('IMAGE_TAG', hlCreateTagName('pkg:version'))
